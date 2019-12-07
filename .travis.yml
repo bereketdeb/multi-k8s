@@ -1,0 +1,22 @@
+sudo: required 
+services:
+  - docker 
+
+before_install:
+  #build and run test image in the dev env
+  - docker build -t bereketdeb/multi-docker-test ./client/Docekrfile.dev .
+script:
+  - docker run bereketdeb/multi-docker-test npm test -- --coverage
+after_success:
+  #creating images for all services
+  - docker build -t bereketdeb/multi-client ./client
+  - docker build -t bereketdeb/multi-server ./server
+  - docker build -t bereketdeb/multi-nginx ./nginx
+  - docker build -t bereketdeb/multi-worker ./worker
+  #log in to dockerhub
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # push the created images to dockerhub
+  - docker push bereketdeb/multi-client
+  - docker push bereketdeb/multi-worker
+  - docker push bereketdeb/multi-nginx
+  - docker push bereketdeb/multi-server
