@@ -4,7 +4,7 @@ services:
 
 before_install:
   #build and run test image in the dev env
-  - docker build -t bereketdeb/multi-docker-test -f ./client/Docekrfile.dev .
+  - docker build -t bereketdeb/multi-docker-test -f ./client/Docekrfile.dev ./client
 script:
   - docker run bereketdeb/multi-docker-test npm test -- --coverage
 after_success:
