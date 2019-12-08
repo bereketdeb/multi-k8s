@@ -4,19 +4,19 @@ services:
 
 before_install:
   #build and run test image in the dev env
-  - docker build -t bereketdeb/multi-docker-test -f ./client/Dockerfile.dev ./client
+  - docker build -t bereketdeb1/multi-docker-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run -e CI=true bereketdeb/multi-docker-test npm test
+  - docker run -e CI=true bereketdeb1/multi-docker-test npm test
 after_success:
   #creating images for all services
-  - docker build -t bereketdeb/multi-client ./client
-  - docker build -t bereketdeb/multi-server ./server
-  - docker build -t bereketdeb/multi-nginx ./nginx
-  - docker build -t bereketdeb/multi-worker ./worker
+  - docker build -t bereketdeb1/multi-client ./client
+  - docker build -t bereketdeb1/multi-server ./server
+  - docker build -t bereketdeb1/multi-nginx ./nginx
+  - docker build -t bereketdeb1/multi-worker ./worker
   #log in to dockerhub
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # push the created images to dockerhub
-  - docker push bereketdeb/multi-client
-  - docker push bereketdeb/multi-worker
-  - docker push bereketdeb/multi-nginx
-  - docker push bereketdeb/multi-server
+  - docker push bereketdeb1/multi-client
+  - docker push bereketdeb1/multi-worker
+  - docker push bereketdeb1/multi-nginx
+  - docker push bereketdeb1/multi-server
