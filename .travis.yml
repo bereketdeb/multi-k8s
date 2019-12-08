@@ -6,7 +6,7 @@ before_install:
   #build and run test image in the dev env
   - docker build -t bereketdeb1/multi-docker-test -f ./client/Dockerfile.dev ./client
 script:
-  - docker run -e CI=true bereketdeb1/multi-docker-test npm test
+  - docker run bereketdeb1/multi-docker-test npm test -- --coverage
 after_success:
   #creating images for all services
   - docker build -t bereketdeb1/multi-client ./client
